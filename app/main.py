@@ -2,18 +2,16 @@ import torch
 import uvicorn
 from uvicorn import Config, Server
 from fastapi import FastAPI, File, UploadFile, HTTPException
-from pydantic import BaseModel# o validate the input and output of the RESTful API, we can define the schema in FastAPI with pydantic, which will be used to generate the OpenAPI docs and ReDoc automatically.
-import torch.nn as nn
-import torch.nn.functional as F
-import torch.optim as optim
-from torchvision import datasets, transforms, models
+import pydantic
+from pydantic import BaseModel# to validate the input and output of the RESTful API, we can define the schema in FastAPI with pydantic, which will be used to generate the OpenAPI docs and ReDoc automatically.
 from PIL import Image
 import io
 from fastapi.responses import HTMLResponse, StreamingResponse
 import cv2
 import numpy as np
-
-
+import ultralytics
+from ultralytics import YOLO
+from ultralytics.yolo.utils.plotting import Annotator, colors #me: annotator uses opencv like cv2.rectangle, cv2.draw.text,......
 
 app = FastAPI(title='Deploying a ML Model with FastAP')
 
@@ -52,13 +50,8 @@ async def main():
 
 
 
-from PIL import Image
-import io
-import torch
-import pandas as pd
-import numpy as np
-from ultralytics import YOLO
-from ultralytics.yolo.utils.plotting import Annotator, colors #me: annotator uses opencv like cv2.rectangle, cv2.draw.text,......
+
+
 model = YOLO("yolov8n-seg.pt")  # load an official model (seg+box)
 
 #?? loading model before receiving an image???  https://github.com/chaklam-silpasuwanchai/Python-for-Data-Science/tree/master/Code/Appendix%20-%20Deployment/01-FastAPI%2BDocker
@@ -113,7 +106,7 @@ async def predict(files: UploadFile = File(...)):
 
 # Start the app in normal deployment
 if __name__ == "__main__":
-    uvicorn.run("main:app", host="127.0.0.1", port=8000)
+    uvicorn.run("main:app", host="0,0,0,0", port=8000)
 
 #  !uvicorn main:app --port 8000 --host 0.0.0.0
 
