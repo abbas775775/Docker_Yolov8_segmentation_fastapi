@@ -29,7 +29,7 @@ class ImageRequest(BaseModel):
 
 
 
-@app.get("/")  #this part only from  https://colab.research.google.com/github/aasimsani/model-quick-deploy/blob/main/Model_Quick_Deploy.ipynb#scrollTo=EIQ3BGWgNAe6
+@app.get("/")  
 async def main():
     """Create a basic home page to upload a file
 
@@ -48,21 +48,8 @@ async def main():
     return HTMLResponse(content=content)
 
 
-
-
-
-
 model = YOLO("yolov8n-seg.pt")  # load an official model (seg+box)
 
-#?? loading model before receiving an image???  https://github.com/chaklam-silpasuwanchai/Python-for-Data-Science/tree/master/Code/Appendix%20-%20Deployment/01-FastAPI%2BDocker
-#@app.on_event("startup")  #To add a function that should be run before the application starts, declare it with the event "startup":
- #      async def startup_event():  #things like connecting to a database, loading model or configuration settings, or setting up background tasks.   
-
-
-
-
-#1- async type:
-# Define API endpoint for image classification
 @app.post("/predict/")
 async def predict(files: UploadFile = File(...)):  
         # first, VALIDATE INPUT FILE
