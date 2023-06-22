@@ -2,7 +2,7 @@ ultralytics
 fastapi[all]
 uvicorn[standard]
 pillow
-pydantic==1.10.7
+pydantic
 
 
 numpy
