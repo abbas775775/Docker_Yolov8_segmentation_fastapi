@@ -1,18 +1,14 @@
-
+ultralytics
+fastapi[all]
+uvicorn[standard]
+pillow
 pydantic==1.10.7
 
 
-ultralytics==8.0.115
-uvicorn==0.22.0
-fastapi==0.96.1
-Pillow==9.5.0
-
-
-
-numpy==1.22.4
-opencv_contrib_python==4.7.0.72
-opencv_python==4.7.0.72
-opencv_python_headless==4.7.0.72
-pandas==1.5.3
+numpy
+opencv_contrib_python
+opencv_python
+opencv_python_headless
+pandas
 
 
