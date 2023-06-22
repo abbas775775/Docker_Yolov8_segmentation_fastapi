@@ -4,7 +4,13 @@ FROM python:3.8.5-slim
 WORKDIR /app
 
 COPY ./app/requirements.txt /app/requirements.txt
-RUN apt-get update
+
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install\
+    libgl1\
+    libgl1-mesa-glx \ 
+    libglib2.0-0 -y
+
+
 RUN pip install --upgrade pip
 
 RUN apt install -y libgl1-mesa-glx
