@@ -11,7 +11,7 @@ import cv2
 import numpy as np
 import ultralytics
 from ultralytics import YOLO
-from ultralytics.yolo.utils.plotting import Annotator, colors #me: annotator uses opencv like cv2.rectangle, cv2.draw.text,......
+from ultralytics.yolo.utils.plotting import Annotator, colors 
 
 app = FastAPI(title='Deploying a ML Model with FastAP')
 
