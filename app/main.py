@@ -66,7 +66,7 @@ async def predict(files: UploadFile = File(...)):
         masks=np.array(results[0].masks.data)
 
         device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-        image = np.asarray(image)
+        image = np.array(image)
         annotator = Annotator(image)#$$$$ we should annotator again due to the last change:   annotator=Image.fromarray(annotator.result())
         img_gpu = torch.as_tensor(image, dtype=torch.float16, device=results[0].masks.data.device).permute(
                 2, 0, 1).flip(0).contiguous() / 255
