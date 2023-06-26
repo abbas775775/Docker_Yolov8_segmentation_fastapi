@@ -3,7 +3,7 @@ import uvicorn
 from uvicorn import Config, Server
 from fastapi import FastAPI, File, UploadFile, HTTPException
 import pydantic
-from pydantic import BaseModel# to validate the input and output of the RESTful API, we can define the schema in FastAPI with pydantic, which will be used to generate the OpenAPI docs and ReDoc automatically.
+from pydantic import BaseModel# 
 from PIL import Image
 import io
 from fastapi.responses import HTMLResponse, StreamingResponse
@@ -17,8 +17,6 @@ app = FastAPI(title='Deploying a ML Model with FastAP')
 
 
 # Define class for image requests
-#me: If a user passes something that is incorrect, a response is returned to the user letting them know that the request could not be processed due to a data validation error
-# # Expected input
 class ImageRequest(BaseModel):
     file_name: str
     file_content: UploadFile
@@ -48,7 +46,7 @@ async def main():
     return HTMLResponse(content=content)
 
 
-model = YOLO("yolov8n-seg.pt")  # load an official model (seg+box)
+model = YOLO("yolov8n-seg.pt") 
 
 @app.post("/predict/")
 async def predict(files: UploadFile = File(...)):  
@@ -67,19 +65,16 @@ async def predict(files: UploadFile = File(...)):
 
         device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
         image = np.array(image)
-        annotator = Annotator(image)#$$$$ we should annotator again due to the last change:   annotator=Image.fromarray(annotator.result())
+        annotator = Annotator(image)
         img_gpu = torch.as_tensor(image, dtype=torch.float16, device=results[0].masks.data.device).permute(
                 2, 0, 1).flip(0).contiguous() / 255
         annotator.masks(results[0].masks.data, colors=[colors(x) for x in range(len(idx))], im_gpu=img_gpu)
-        #annotator.masks(results[0].masks.data, colors=[colors(x, True) for x in range(len(idx))], im_gpu=img_gpu)
-        #                                                         True: i think for bgr or rgb <-- bgr=False
-        #annotator=Image.fromarray(annotator.result())# result() is different than results[0]
-        #annotator.show()
+      
 
 
-        cv2.imwrite("cv_sil.jpg", cv2.cvtColor(annotator.result(), cv2.COLOR_RGB2BGR)) #????cv2.imencode
-        new_image=open("cv_sil.jpg",mode="rb")#read the image as a binary
-        return StreamingResponse(new_image,media_type="image/jpeg") #send binay image to the site
+        cv2.imwrite("cv_sil.jpg", cv2.cvtColor(annotator.result(), cv2.COLOR_RGB2BGR)) 
+        new_image=open("cv_sil.jpg",mode="rb")
+        return StreamingResponse(new_image,media_type="image/jpeg") 
         
 
         
