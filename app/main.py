@@ -54,7 +54,7 @@ model = YOLO("yolov8n-seg.pt")  # load an official model (seg+box)
 async def predict(files: UploadFile = File(...)):  
         # # first, VALIDATE INPUT FILE
         filename = files.filename
-        fileExtension = filename.split(".")[-1] in ("jpg", "jpeg", "png")
+        fileExtension = filename.split(".")[-1] in ("jpg", "jpeg", "png", "JPG", "JPEG", "PNG")
         if not fileExtension:
             raise HTTPException(status_code=415, detail="Unsupported file provided.")  
         image = await files.read()
